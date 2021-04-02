@@ -8,14 +8,42 @@
 </head>
 <body>
 
-<div class="container pt-5" id="app">
-  <div class="card center">
-    <h1>{{ title }}: {{ counter }}</h1>
-    <p>
-      <button class="btn primary" v-on:click="counter++">+</button>
-      <button class="btn danger" v-on:click="counter--">-</button>
-    </p>
-
+<div class="container" id="app">
+  <div class="card">
+    <h1 :style="{color: inputValue.length < 3 ? 'darkred' : 'green'}">{{ title }}</h1>
+    <div class="form-control">
+      <input :style="{
+          border: inputValue.length < 3 ? '2px solid #CCC' : '2px solid green',
+          color: inputValue.length < 3 ? 'darkred' : 'green',
+        }"
+        type="text"
+        :placeholder="placeholder"
+        v-model="inputValue"
+        @keypress.enter="addNote"
+      >
+    </div>
+    <button class="btn" @click="addNote">Добавить</button>
+    <hr>
+    <ul class="list" v-if="notes.length !== 0">
+      <li class="list-item" v-for="(note, idx) in notes">
+        <!--span :class="note.length > 5 ? 'primary' : 'bold'">{{ idx + 1 }}. {{ upperCase(note) }}</span-->
+<!--        <span :class="{-->
+<!--          'primary': true,-->
+<!--          'bold':note.length > 5-->
+<!--        }">-->
+<!--          {{ idx + 1 }}. {{ upperCase(note) }}-->
+<!--        </span>-->
+        <span :class="[
+          'bold', {'primary': note.length > 5}
+        ]">
+          {{ idx + 1 }}. {{ upperCase(note) }}
+        </span>
+        <button class="btn danger" @click="deleteNote(idx, $event)">Удалить</button>
+      </li>
+    </ul>
+    <div v-else>Заметок пока нет!</div>
+    <hr>
+    <p>Total count: {{ notes.length }} | Double {{ doubleCount }}</p>
   </div>
 </div>
 

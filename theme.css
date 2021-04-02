@@ -139,11 +139,7 @@ h3 {
   font-weight: 500;
 }
 
-.form-control input:active,
-.form-control input:focus {
-  transition: border 0.22s;
-  border: 2px solid #42b983;
-}
+
 
 .card {
   padding: 1rem;
